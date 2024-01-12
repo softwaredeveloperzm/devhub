@@ -1,0 +1,54 @@
+{% extends 'users/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<section style="background-image: url('https://source.unsplash.com/1200x800/?coding,cybersecurity'); background-size: cover; background-repeat: no-repeat;">
+    <h1 class="text-light display-3 fw-bold mb-5" style="color: black;">Ask to DevHub</h1>
+
+    <div class="container mt-5">
+        <div class="row justify-content-start">
+            <div class="col-md-6 mb-4 smokewhite-bg">
+                <div class="card smokewhite-bg">
+                    <div class="card-body">
+                        <h6 class="mb-4">Ask a Question</h6>
+                        <form method="POST" action="{% url 'ask' %}" class="my-form">
+                            {% csrf_token %}
+    
+                            <!-- Title Section -->
+                            <div class="mb-3">
+                                <label for="{{ form.title.id_for_label }}" class="form-label text-dark">Title</label>
+                                {{ form.title|add_class:'form-control' }}
+                            </div>
+    
+                            <!-- Content Section -->
+                            <div class="mb-3">
+                                <label for="id_content" class="form-label text-light">Content</label>
+                                {{ form.content|add_class:'form-control' }}
+                            </div>
+                            {{ form.media }}
+    
+                            <div class="d-grid gap-2">
+                            </div>
+    
+                            <button type="submit" class="btn btn-light">Ask</button>
+                            <a href="{% url 'all_questions' %}" class="btn btn-secondary">Back</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-6 smokewhite-bg">
+                <div class="card mb-4 smokewhite-bg">
+                    <div class="card-body">
+                        <h1 class="mb-4">About DevHub</h1>
+                        <p>
+                            DevHub is a community-driven platform where developers share their knowledge, ask questions, and collaborate on coding projects. Join our vibrant community today!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

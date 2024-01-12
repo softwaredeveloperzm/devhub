@@ -1,0 +1,38 @@
+/* Add this CSS to your styles.css or include it directly in your HTML */
+.custom-form {
+    max-width: 400px;
+    margin: auto;
+}
+
+.custom-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.custom-form input,
+.custom-form textarea {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+.custom-form button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+}
+
+.alert {
+    margin-top: 1rem;
+}
+
+
+  @media (max-width: 991.98px) {
+      .sidebar-left, .sidebar-right {
+          display: none; /* Hide side navs in mobile views */
+      }
+  }
+  

@@ -1,0 +1,37 @@
+{% extends 'users/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Update Question{% endblock %}
+
+{% block content %}
+  <div class="container mt-4" style="max-width: 600px; width: 80%; height: 500px; overflow-y: auto;">
+    <!-- Adjusted max-width, width, and added height and overflow-y properties -->
+    <h1 class="mb-3">Update <br> Question</h1>
+    <form method="post" class="post-form">
+      {% csrf_token %}
+
+      <!-- Render each form field individually using Widget Tweaks -->
+      <div class="form-group">
+        <div class="mb-2">
+          <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+          {{ form.title|add_class:'form-control mb-1' }}
+        </div>
+        
+        <div class="mb-3">
+          <label for="{{ form.content.id_for_label }}" class="form-label">Content</label>
+          {{ form.content|add_class:'form-control mb-2' }}
+        </div>
+      </div>
+
+      <!-- Add more form fields as needed -->
+
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> Update
+      </button>
+
+      <a href="{% url 'all_questions' %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+    </form>
+  </div>
+{% endblock %}

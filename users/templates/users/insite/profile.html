@@ -1,0 +1,41 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px" src="{% static 'images/blank-profile.png' %}">
+                <span class="font-weight-bold">{{ form.instance.first_name }} {{ form.instance.last_name }}</span>
+                <span class="text-black-50">{{ form.instance.email }}</span>
+            </div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <form method="POST" action="{% url 'profile' email=form.instance.email %}">
+                    {% csrf_token %}
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">Full Names</label>
+                            <input type="text" class="form-control" name="first_name" placeholder="First Name" value="{{ form.instance.first_name }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Email" value="{{ form.instance.email }}">
+                        </div>
+                    </div>
+                    <!-- Add more form fields here based on your structure -->
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-outline-primary ms-2" type="submit">Save Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock content %}
