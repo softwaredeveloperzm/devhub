@@ -10,13 +10,11 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from .forms import UserUpdateForm
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 
 
 
- #Use this decorator to exempt CSRF token requirement for simplicity. Be cautious in production.
-@csrf_exempt 
+
 def signup(request):
     if request.method == 'POST':
         # Retrieve form data
@@ -27,7 +25,8 @@ def signup(request):
         try:
             # Check if the user with the given email already exists
             user = User.objects.get(username=email)
-            return JsonResponse({'error': 'User with this email already exists. Please log in.'})
+            error_message = 'User with this email already exists. Please log in.'
+            return render(request, 'signup.html', {'error_message': error_message})
 
         except User.DoesNotExist:
             # Create a new user
@@ -38,16 +37,24 @@ def signup(request):
             # Log in the user
             login(request, user)
 
-            return JsonResponse({'success': 'User registered successfully'})
-
+            success_message = 'User registered successfully'
+            
+            return redirect('base:all_questions')
         except IntegrityError:
             # Handle any other IntegrityError that might occur
-            return JsonResponse({'error': 'An error occurred during signup. Please try again.'})
+            error_message = 'An error occurred during signup. Please try again.'
+            return render(request, 'users/signup.html', {'error_message': error_message})
+        
 
-    return JsonResponse({'error': 'Invalid request method'})
+    # Render the initial signup form
+    return render(request, 'users/signup.html')
 
-@csrf_exempt
+
+
+
 def signin(request):
+    error_message = None
+
     if request.method == 'POST':
         # Retrieve form data
         email = request.POST.get('email')
@@ -65,27 +72,20 @@ def signin(request):
             if not remember_me:
                 request.session.set_expiry(0)
 
-            # Return success JSON response
-            return JsonResponse({'success': True})
+            # Render the success HTML file
+            return redirect('base:all_questions')
         else:
-            # Return error JSON response
-            return JsonResponse({'success': False, 'error': 'Invalid email or password. Please try again.'})
+            # Set an error message
+            error_message = 'Invalid email or password. Please try again.'
 
-    # Return error JSON response for invalid request method
-    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+    # Render the signin HTML file with an optional error message
+    return render(request, 'users/login.html', {'error_message': error_message})
 
 
 def custom_logout(request):
     logout(request)
     messages.info(request, "Logged out successfully")
-    return redirect("/")
-
-
-
-def home(request):
-
-    return render(request, 'users/home.html')
-
+    return redirect("base:all_questions")
 
 
 def profile(request, email):
@@ -104,7 +104,7 @@ def profile(request, email):
             form.save()
 
             # Redirect to the updated profile page or any other appropriate view
-            return redirect('profile', email=new_email)
+            return redirect('users:profile', email=new_email)
     else:
         form = UserUpdateForm(instance=user)
 

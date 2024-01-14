@@ -3,7 +3,7 @@
 
 {% block content %}
 <section style="background-image: url('https://source.unsplash.com/1200x800/?coding,cybersecurity'); background-size: cover; background-repeat: no-repeat;">
-    <h1 class="text-light display-3 fw-bold mb-5" style="color: black;">Ask to DevHub</h1>
+    <h5 class="text-light display-3 fw-bold mb-5" style="color: black;">Ask to DevHub</h5>
 
     <div class="container mt-5">
         <div class="row justify-content-start">
@@ -11,7 +11,7 @@
                 <div class="card smokewhite-bg">
                     <div class="card-body">
                         <h6 class="mb-4">Ask a Question</h6>
-                        <form method="POST" action="{% url 'ask' %}" class="my-form">
+                        <form method="POST" action="{% url 'base:ask' %}" class="my-form">
                             {% csrf_token %}
     
                             <!-- Title Section -->
@@ -31,7 +31,7 @@
                             </div>
     
                             <button type="submit" class="btn btn-light">Ask</button>
-                            <a href="{% url 'all_questions' %}" class="btn btn-secondary">Back</a>
+                            <a href="{% url 'base:all_questions' %}" class="btn btn-secondary">Back</a>
                         </form>
                     </div>
                 </div>

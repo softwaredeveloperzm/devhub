@@ -15,7 +15,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
-                <form method="POST" action="{% url 'profile' email=form.instance.email %}">
+                <form method="POST" action="{% url 'users:profile' email=form.instance.email %}">
                     {% csrf_token %}
                     <div class="row mt-2">
                         <div class="col-md-6">

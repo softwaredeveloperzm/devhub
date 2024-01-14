@@ -5,7 +5,7 @@
 
 <div class="container mt-4">
     <!-- Search Bar -->
-    <form action="/" method="GET" class="mb-3">
+    <form action="{% url 'base:all_questions' %}" method="GET" class="mb-3">
         <div class="input-group">
             <input id="q" name="q" value="{{ request.GET.q }}" type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
             <div class="input-group-append">
@@ -15,14 +15,12 @@
     </form>
     <!-- Four Buttons Section -->
     <div class="mb-3">
-        <a href="{% url 'ask' %}" class="btn btn-primary mr-2">Ask a Question</a>
+        <a href="{% url 'base:ask' %}" class="btn btn-primary mr-2">Ask</a>
 
         <button type="button" class="btn btn-secondary mr-2">Button 2</button>
         <button type="button" class="btn btn-success mr-2">Button 3</button>
         <button type="button" class="btn btn-danger">Button 4</button>
-    </div
-    
-    <h2 class="mt-3">Questions</h2>
+    </div>
 
     <table class="table table-bordered table-hover mt-2">
         <thead>
@@ -36,7 +34,7 @@
                 <tr>
                     
                     <td>
-                        <a href="{% url 'question_detail' slug=question.slug %}" style="color: blue; text-decoration: none;">{{ question.title }}</a>
+                        <a href="{% url 'base:question_detail' slug=question.slug %}" style="color: blue; text-decoration: none;">{{ question.title }}</a>
 
                         <div class="question-description">{{ question.content | truncatewords_html:20 | safe }}</div>
                         
@@ -60,19 +58,66 @@
 </div>
 
 
+<div id="rightbox">
+    <div class="header">
+        <h2>About DevHub</h2>
+    </div>
+  
+    <div class="inner-container">
+        DevHub is a platform where developers can contribute by writing articles. Publishing articles follows a few steps; articles that need little modification/improvement from reviewers are published first.
+    </div>
+    
+    <div class="line-separator mt-3"></div>
+
+    <div class="main">
+    
+        
+        <!-- Users and Online Section -->
+        <div class="users-online mt-3">
+            <div class="user-info">
+                <p>Users:</p>
+                <p>{{ total_users}}</p>
+            </div>
+            <div class="user-info">
+                <p>Online:</p>
+                <p>20</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="line-separator mt-3"></div>
+</div>
+
 
 <!-- Bootstrap Pagination links -->
 <nav aria-label="Page navigation example" class="mt-3">
     <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
+        {% if questions.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ questions.previous_page_number }}" tabindex="-1">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+        {% endif %}
+
+        {% for i in questions.paginator.page_range %}
+            <li class="page-item {% if questions.number == i %}active{% endif %}">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+
+        {% if questions.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ questions.next_page_number }}">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Next</span>
+            </li>
+        {% endif %}
     </ul>
 </nav>
+
 {% endblock %}

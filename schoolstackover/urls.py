@@ -20,9 +20,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('users.urls')),
-    path('', include('base.urls')),
+    path('signup/', include('users.urls', namespace='users')),
+    path('signin/', include('users.urls', namespace='users')),
+    path('logout/', include('users.urls', namespace='users')),
+    path('profile/<email>/', include('users.urls', namespace='users')),
+    path('base/', include('base.urls', namespace='base')),
+    path('', include('base.urls', namespace='base')),  # Add this line for the default route
+    # Add other app URLs as needed
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
     

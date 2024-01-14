@@ -3,54 +3,35 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-<div class="container mt-10">
-            {% if messages %}
-            <div class="alert alert-danger" role="alert">
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-    <p class="text-center mb-4">Welcome! Please sign in to continue.</p>
-    <form method="post" action="{% url 'signin' %}">
-        {% csrf_token %}
-        <!-- Email input -->
-        <div class="mb-2">
-            <label for="form2Example1" class="form-label">Email address</label>
-            <input type="email" name="email" id="form2Example1" class="form-control">
-        </div>
-
-        <!-- Password input -->
-        <div class="mb-4">
-            <label for="form2Example2" class="form-label">Password</label>
-            <input type="password" name="password" id="form2Example2" class="form-control">
-        </div>
-
-        <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4">
-            <div class="col d-flex justify-content-center">
-                <!-- Checkbox -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" id="form2Example34" checked>
-                    <label class="form-check-label" for="form2Example34">Remember me</label>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <p class="text-center mb-4">Welcome! Please sign up to create an account.</p>
+            <form method="post" action="{% url 'users:signin' %}" class="mb-4">
+                {% csrf_token %}
+            
+                <!-- Email input -->
+                <div class="mb-2">
+                    <label for="form2Example2" class="form-label">Email address</label>
+                    <input type="email" name="email" id="form2Example2" class="form-control">
                 </div>
-            </div>
 
-            <div class="col">
-                <!-- Simple link -->
-                <a href="#!" class="d-block">Forgot password?</a>
-            </div>
+                <!-- Password input -->
+                <div class="mb-4">
+                    <label for="form2Example3" class="form-label">Password</label>
+                    <input type="password" name="password" id="form2Example3" class="form-control">
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+
+                <!-- Register buttons -->
+                <div class="text-center mt-3">
+                    <p class="mb-0">Already a member? <a href="{% url 'users:signup' %}" class="d-inline">Login</a></p>
+                </div>
+            </form>
         </div>
-
-        <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-
-        <!-- Register buttons -->
-        <div class="text-center">
-            <p class="mb-0">Not a member? <a href="{% url 'signup' %}" class="d-inline">Register</a></p>
-        </div>
-    </form>
+    </div>
 </div>
 
 {% endblock %}

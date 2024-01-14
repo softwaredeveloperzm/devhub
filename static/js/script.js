@@ -79,25 +79,6 @@
     });
 
 
-// Replace with the actual slug of the question you want to delete
-var questionSlug = "{{ question.slug }}";
-    document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-// Construct the URL with the correct slug parameter and call the delete_question view
-var confirmDeleteUrl = "{% url 'delete_question' slug='PLACEHOLDER' %}".replace('PLACEHOLDER', questionSlug);
-
-// Create a form element dynamically
-var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = confirmDeleteUrl;
-
-// Append the CSRF token input field
-var csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].cloneNode();
-    form.appendChild(csrfToken);
-
-    // Append the form to the document and submit it
-    document.body.appendChild(form);
-    form.submit();
-});
 
 
 document.addEventListener('DOMContentLoaded', function() {

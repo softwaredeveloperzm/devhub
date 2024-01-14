@@ -71,6 +71,7 @@
 
         .container {
             max-width: 800px;
+     
         }
 
         .table-hover tbody tr:hover {
@@ -117,6 +118,55 @@
         /* Add any other background styles you want */
     }
 
+    #rightbox {
+    position: fixed;
+    top: 140px;
+    right: 0;
+    background: white;
+    width: 20%;
+    height: 300px;
+}
+
+#rightbox .header {
+    background-color: #013328;
+    height: 50px;
+}
+
+#rightbox .header h2 {
+    color: white;
+    margin-left: 20px; /* Adjust the margin as needed */
+    font-size: 18px;
+    font-weight: 600;
+    top: 100px;
+    text-align: center;
+
+   
+}
+
+#rightbox .inner-container {
+    background-color: white;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.users-online {
+    display: flex;
+    text-align: center;
+    margin-left: 70px;
+}
+
+.user-info {
+    margin-right: 20px; /* Adjust the margin as needed */
+}
+
+@media (max-width: 768px){
+    #rightbox{
+        display: none;
+    }
+}
+
+
 </style>
 <body>
     <nav class="navbar navbar-expand-lg" style="background-color: #013328;">
@@ -136,17 +186,17 @@
                     <!-- Show profile and logout when user is logged in -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="btn btn-success" href="{% url 'profile' email=request.user.email %}">Profile</a>
-                            <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+                            <a class="btn btn-success" href="{% url 'users:profile' email=request.user.email %}">Profile</a>
+                            <a class="btn btn-danger" href="{% url 'users:logout' %}">Logout</a>
                         </li>
                     </ul>
                 {% else %}
                     <!-- Show login and signup when user is not logged in -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalLogin">Login</button>
-                            <a class="btn btn-primary btn-sm ms-2" style="margin-right: 10px;" href="#" data-toggle="modal" data-target="#modalSignup">
-                                <i class="fa fa-user-plus"></i>
+                   
+                            <a class="btn btn-primary btn-sm ms-2" style="margin-right: 10px;" href="{% url 'users:signin' %}">Login</a>
+                            <a class="btn btn-primary btn-sm ms-2" style="margin-right: 10px;" href="{% url 'users:signup' %}">Signup</a>
                             </a>
                         </li>
                     </ul>
@@ -198,65 +248,6 @@
     </footer>
 
 
-
-    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #E3DCD2;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="login-form" method="post" action="{% url 'signin' %}">
-                        {% csrf_token %}
-                        <div class="alert alert-danger" role="alert" id="login-error">
-                            <!-- Error message will be displayed here -->
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-success">Log In</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="modalSignup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #E3DCD2;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{% url 'signup' %}" id="signup-form">
-                        {% csrf_token %}
-                        <div class="alert alert-danger" role="alert" id="signup-error"></div>
-                        <div class="mb-3">
-                            <label for="full_names" class="form-label">Full Names</label>
-                            <input type="text" class="form-control" id="full_names" name="full_names" placeholder="Full names">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-success">Sign Up</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <script src="{% static 'js/script.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
